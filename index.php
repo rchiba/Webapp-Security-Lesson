@@ -74,7 +74,6 @@
   </head>
 
   <body>
-
     <div class="topbar">
       <div class="fill">
         <div class="container">
@@ -84,12 +83,12 @@
             <li><a href="#about">Chat</a></li>
             <li><a href="#contact">Discover</a></li>
           </ul>
-          <form action="" class="pull-right">
+          <form action="checkLogin.php" class="pull-right">
             <a href="#" data-placement="below" rel="popover" data-content="Hmmm... I wonder if they're checking the input fields?" data-original-title="SQL Injection">
-                <input class="input-small" type="text" placeholder="Username">
+                <input class="input-small" type="text" placeholder="Username" name="username">
             </a>
             <a href="#" data-placement="below" rel="popover" data-content="Here are some examples of entries that might reveal interesting information: <br> hello" data-original-title="Examples">
-            <input class="input-small" type="password" placeholder="Password">
+            <input class="input-small" type="password" placeholder="Password" name="password">
             </a>
             <button class="btn" type="submit">Sign in</button>
           </form>

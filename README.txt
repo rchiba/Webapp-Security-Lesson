@@ -8,3 +8,5 @@ Types of exploits shown
 * XSS
 * Something else that I haven't decided on yet
 
+Environment
+The application uses the default installation of XAMPP, and uses the default pre-initialized 'test' database included with the installation.
