@@ -30,6 +30,7 @@
             })
         })
         
+        
         // initialize database button
         $("#initDB").click(function(){
             console.log('initialize database clicked');
@@ -57,6 +58,7 @@
                 }
             });// END ajax
         });
+        $(".alert-message").alert(); // close functionality added here
       });// END document.ready
       </script>
       
@@ -83,7 +85,7 @@
             <li><a href="#about">Chat</a></li>
             <li><a href="#contact">Discover</a></li>
           </ul>
-          <form action="checkLogin.php" class="pull-right">
+          <form action="checkLogin.php" class="pull-right" method="post">
             <a href="#" data-placement="below" rel="popover" data-content="Hmmm... I wonder if they're checking the input fields?" data-original-title="SQL Injection">
                 <input class="input-small" type="text" placeholder="Username" name="username">
             </a>
@@ -101,7 +103,26 @@
       <div class="content">
         <div class="page-header" style="margin-top:100px;">
           <h1><small></small></h1>
-          <div id="console"></div>
+          <div id="console">
+          <?php
+            if(!empty($_GET["err"]) && $_GET["err"]=="badinput"){
+                echo '<div class="alert-message error"> <a class="close" href="#">x</a><p><strong>Error!</strong> Wrong username or password!</p></div>';
+            }
+            if(!empty($_GET["err"]) && $_GET["err"]=="userAlreadyExists"){
+                echo '<div class="alert-message error"> <a class="close" href="#">x</a><p><strong>Error!</strong> User already exists! Try a different username.</p></div>';
+            }
+            if(!empty($_GET["msg"]) && $_GET["msg"]=="logout"){
+                // session_start();
+                // session_destroy(); 
+                echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>You have been logged out.</p></div>';
+            }
+            if(!empty($_GET["msg"]) && $_GET["msg"]=="userCreated"){
+                // session_start();
+                // session_destroy(); 
+                echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>User has been created.</p></div>';
+            }
+          ?>
+          </div>
         </div>
         <div class="row">
           <div class="span12">
@@ -109,8 +130,30 @@
             This mock social networking site will reveal the kinds of vulnerabilities that are common in poorly implemented web applications. 
             <br>
             <br>
-            First, begin by creating the entires in the database for our example: <button class="btn primary" id="initDB">Initialize Database</button>
-            
+            <form action="initDB.php" method="post" style="margin-left:-69px; margin-top:20px;">
+                <fieldset>
+                    <legend>Create a new user:</legend <br>
+                    <div class="clearfix">
+                        <label for="username">username</label>
+                        <div class="input">
+                            <input class="xlarge" id="newUsername" name="username" size="30" type="text">
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="password">password</label>
+                        <div class="input">
+                            <input class="xlarge" id="newPassword" name="password" size="30" type="text">
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="initDB"></label>
+                        <div class="input">
+                            <button class="btn primary" id="initDB">Sign up</button>
+                        </div>
+                    </div>
+                    
+                </fieldset>
+            </form>
             <br>
             
             <br>

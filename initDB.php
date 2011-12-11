@@ -20,26 +20,41 @@ mysql_select_db("$db_name")or die("cannot select DB");
 // ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
 // INSERT INTO `members` VALUES (1, 'john', '1234');
-$defaultUser='user';
-$defaultPass='1234';
+$defaultUser=$_POST["username"];
+$defaultPass=$_POST["password"];
 $sqlDrop="DROP TABLE IF EXISTS $tbl_name;";
 $sqlCreateTable="Create Table $tbl_name(id INT(4) NOT NULL auto_increment, username VARCHAR(65) NOT NULL, pword VARCHAR(65) NOT NULL, PRIMARY KEY(id)) ENGINE=MyISAM;";
-$sqlInsertEntry="INSERT INTO $tbl_name (username,pword) VALUES ('$defaultUser', $defaultPass);";
-mysql_query($sqlDrop);
-mysql_query($sqlCreateTable);
-mysql_query($sqlInsertEntry);
+$sqlCreatePostTable="Create Table $tbl_namePosts(id INT(4) NOT NULL auto_increment, username VARCHAR(65) NOT NULL, post VARCHAR(300) NOT NULL, time timestamp NULL, PRIMARY KEY(id)) ENGINE=MyISAM;";
+$sqlInsertEntry="INSERT INTO $tbl_name (username,pword) VALUES ('$defaultUser', '$defaultPass');";
 
-$sqlSelect="SELECT * FROM $tbl_name WHERE username='$defaultUser' and pword='$defaultPass';";
+// mysql_query($sqlDrop);
+// create both tables in case they are not created already
+mysql_query($sqlCreateTable);
+mysql_query($sqlCreatePostTable);
+
+$sqlSelect="SELECT * FROM $tbl_name WHERE username='$defaultUser';";
 $selectResult=mysql_query($sqlSelect);
 
-// Mysql_num_row is counting table row
 $count=mysql_num_rows($selectResult);
-// If result matched $myusername and $mypassword, table row must be 1 row
-
-if($count!=1){
-    echo "Count was ".$count." and command was ".$sql." and second command was ".$sql2;
-}
-else {
-    echo "success";
+if($count != 0){
+    header("location:index.php?err=userAlreadyExists");
+} else{
+    // proceed by inserting new user
+    echo "about to call ".$sqlInsertEntry;
+    mysql_query($sqlInsertEntry);
+    
+    // see if the entry actually got saved
+    $sqlSelect="SELECT * FROM $tbl_name WHERE username='$defaultUser' and pword='$defaultPass';";
+    $selectResult=mysql_query($sqlSelect);
+    $count=mysql_num_rows($selectResult);
+    echo $selectResult;
+    echo $sqlSelect;
+    if($count==0){
+        echo "Something went wrong.";
+    } else{
+        // password matches
+        header("location:index.php?msg=userCreated");
+    }
+    
 }
 ?>
