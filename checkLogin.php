@@ -30,7 +30,7 @@ if($count==1){
 session_start();
 $_SESSION['username']=$myusername;
 $_SESSION['password']=$mypassword; 
-header("location:loggedIn.php");
+header("location:profile.php?username=".$_SESSION['username']);
 }
 else {
 echo "Wrong Username or Password";

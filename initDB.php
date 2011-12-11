@@ -53,7 +53,7 @@ if($count != 0){
         echo "Something went wrong.";
     } else{
         // password matches
-        header("location:index.php?msg=userCreated");
+        header("location:index.php?msg=userCreated&user=$defaultUser");
     }
     
 }

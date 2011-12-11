@@ -79,7 +79,7 @@
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="#">The Social Network</a>
+          <a class="brand" href="#">catbook</a>
           <ul class="nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">Chat</a></li>
@@ -119,20 +119,20 @@
             if(!empty($_GET["msg"]) && $_GET["msg"]=="userCreated"){
                 // session_start();
                 // session_destroy(); 
-                echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>User has been created.</p></div>';
+                echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>User '.$_GET["user"].'has been created.</p></div>';
             }
           ?>
           </div>
         </div>
         <div class="row">
           <div class="span12">
-            <a href="#" data-placement="left" rel="popover" data-content="Along the way, these popovers will reveal hints as to what you can do here."data-original-title="Hints"><h2>The Social Network</h2></a>
-            This mock social networking site will reveal the kinds of vulnerabilities that are common in poorly implemented web applications. 
+            <h2>catbook<small>, the social network for cats</small></h2>
+            Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. This mock social networking site will reveal the kinds of vulnerabilities that are common in poorly implemented web applications. Start by creating a few new kitties (users) in the form below. Then, log in as one of them.
             <br>
             <br>
             <form action="initDB.php" method="post" style="margin-left:-69px; margin-top:20px;">
                 <fieldset>
-                    <legend>Create a new user:</legend <br>
+                    <legend>Create a new kitty:</legend <br>
                     <div class="clearfix">
                         <label for="username">username</label>
                         <div class="input">
@@ -173,7 +173,7 @@
       </div>
 
       <footer>
-        <p>&copy; The Social Network 2011</p>
+        <p>&copy; catbook 2011</p>
       </footer>
 
     </div> <!-- /container -->
