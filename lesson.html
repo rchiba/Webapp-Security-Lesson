@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ITP 425 Final Project</title>
+    <meta name="description" content="Demonstrates security vulnerabilities in web applications using examples in a fake social networking site.">
+    <meta name="author" content="Ryo Chiba">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-twipsy.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-alerts.js"></script>
+    <!-- Le js -->
+    <script>
+    $(document).ready(function() {
+        // enables popovers
+        $(function () {
+          $("a[rel=popover]")
+            .popover({
+              offset: 10
+            })
+            .click(function(e) {
+              e.preventDefault();
+            })
+        })
+
+      });// END document.ready
+      </script>
+      
+      
+    
+    <!-- Le styles -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <style>
+        hr{
+            border-bottom:1px solid #ccc;
+        }
+    </style>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  </head>
+
+  <body>
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">catbook</a>
+          <ul class="nav">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="width:580px;">
+
+      <div class="content">
+        <div class="page-header" style="margin-top:100px;">
+          <h1><small></small></h1>
+          <div id="console">
+          </div>
+        </div>
+        <div class="row">
+          <div class="span10">
+            <h2>catbook<small>, a lesson in web application security</small></h2>
+            Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. We'll use this mock web application to learn about three types of security vulnerabilities that exist in web applications. To begin your lesson, position this window side-by-side with the application window and follow along. You will be encouraged to explore, and if you need tips, just hit the buttons to reveal hints.
+            <button class="btn" onclick="window.open('lesson.html');">Hint</button>
+            <br>
+            <hr>
+            <br>
+            <h2>SQL Injection <small>Lesson 1</small></h2>
+            <br>
+            <p><img style="width:580px" src="img/exploits_of_a_mom.png" /></p>
+            <br>
+            
+            <h4>What is SQL Injection?</h4>
+            <p>
+                SQL Injection is defined as "<i>inputting SQL statements in a web form to get a badly designed website to perform operations on the database</i>"
+            </p>
+            <br>
+            
+            <h4>Why is SQL Injection important?</h4> 
+            <p>
+                SQL Injection is so dangerous for a web application because it is an attack on 
+            </p>
+            <br>
+            
+            
+            
+            <p>
+                <h4>Relevant Links</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/SQL_injection" target="_blank">SQL Injection - Wikipedia</a></li>
+                    <li><a href="https://docs.google.com/Doc?docid=0AZNlBave77hiZGNjanptbV84Z25yaHJmMjk&pli=1#Allowed_Intermediary_Character_30801873723976314" target="_blank">SQL Injection Pocket Reference - Google Docs</a></li>
+                    <li><a href="http://www.quora.com/SQL-Injection" target="_blank">SQL Injection Topic - Quora</a></li>
+                    <li><a href="http://imgur.com/RQcCi.jpg" target="_blank">SQL Injection IRL</a></li>
+                    
+                </ul>
+            </p>
+            <hr>
+            <br>
+            <h2>XSS <small>Lesson 2</small></h2>
+            <br>
+            
+            <h4>What is XSS?</h4>
+            <p>
+                XSS (Cross Site Scripting) is defined as "<i>a type of computer security vulnerability typically found in Web applications that enables attackers to inject client-side script into Web pages viewed by other users</i>". In essence, it is <b>a way an attacker can trick another user's browser to run arbitrary client-side code</b>. 
+            </p>
+            <br>
+            
+            <h4>Why is XSS important?</h4> 
+            <p>
+                According to Symantec, XSS attacks accounted for about <b>80%</b> of all documented security vulnerabilities in 2007. Although it has been a number of years since, these types of vulnerabilities are still common, are easy to miss by an impatient developer, and can lead to dangerous security holes. If an attacker can find a way to execute arbitrary client-side code on another user's machine, the possibilities are catastrophic: the attacker could gain private information, account access, and can even write code that may self-propagate throughout a system. 
+            </p>
+            <br>
+            
+            <h4>What are some typical scenarios?</h4> 
+            <p>
+                According to Symantec, XSS attacks accounted for about 80% of all documented security vulnerabilities in 2007. Although it has been a number of years since, these types of vulnerabilities are still common, and are easy to miss by an impatient developer, and can lead to large security holes. If an attacker can find a way to execute arbitrary client-side code on another user's machine, the possibilities are catastrophic: the attacker can gain private information, account access, and can even write code that may self-propagate throughout a system. 
+            </p>
+            <br>
+            
+            <p>
+                <h4>Relevant Links</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">XSS - Wikipedia</a></li>
+                    <li><a href="http://www.reddit.com/r/xss" target="_blank">/r/XSS on reddit</a></li>
+                    <li><a href="http://www.quora.com/XSS?q=xss" target="_blank">Quora's XSS Page</a></li>
+                </ul>
+            </p>
+            
+            <hr>
+            <br>
+            <h2>Access Control <small>Lesson 3</small></h2>
+            <br>
+            <br>
+            
+            
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; catbook 2011</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>

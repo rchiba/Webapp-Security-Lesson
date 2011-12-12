@@ -58,6 +58,8 @@
                 }
             });// END ajax
         });
+        
+        
         $(".alert-message").alert(); // close functionality added here
       });// END document.ready
       </script>
@@ -81,9 +83,6 @@
         <div class="container">
           <a class="brand" href="#">catbook</a>
           <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">Chat</a></li>
-            <li><a href="#contact">Discover</a></li>
           </ul>
           <form action="checkLogin.php" class="pull-right" method="post">
             <a href="#" data-placement="below" rel="popover" data-content="Hmmm... I wonder if they're checking the input fields?" data-original-title="SQL Injection">
@@ -127,7 +126,8 @@
         <div class="row">
           <div class="span12">
             <h2>catbook<small>, the social network for cats</small></h2>
-            Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. This mock social networking site will reveal the kinds of vulnerabilities that are common in poorly implemented web applications. Start by creating a few new kitties (users) in the form below. Then, log in as one of them.
+            Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. This mock social networking site will reveal the kinds of vulnerabilities that are common in poorly implemented web applications. To begin your lesson, start by opening this lesson plan and following the tips.
+            <button class="btn" onclick="window.open('lesson.html');">Open Lesson</button>
             <br>
             <br>
             <form action="initDB.php" method="post" style="margin-left:-69px; margin-top:20px;">
@@ -159,15 +159,15 @@
             <br>
             <br>
             <br>
-            <img src="img/exploits_of_a_mom.png" />
           </div>
           <div class="span4">
             <h2>Types of Attacks Examined</h2>
             <ul>
                 <li>SQL Injections</li>
                 <li>Cross Site Scripting</li>
-                <li>Something else</li>
+                <li>Access Controls</li>
             </ul>
+            
           </div>
         </div>
       </div>

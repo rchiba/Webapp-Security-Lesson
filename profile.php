@@ -67,6 +67,11 @@
             });// END ajax
         }
         
+        
+        // Hmmm... this function looks interesting, doesn't it.
+        // Some unsophisticated developer must have accidentally left this in here for all profile pages
+        // instead of just yours. This may be able to elevate your access controls.
+        //
         /*var*/ insertPost = function(){
             $.ajax({
                 type: "post",
@@ -172,7 +177,13 @@
         </div>
         <div class="row">
           <div class="span5">
-            <img src="img/cat<?php echo abs(hexdec(substr(sha1($localName), 0, 10))%10)+1?>.jpg" style="width:280px"/>
+            <img src="img/cat<?php 
+                if($localName == "felix" || $localName == "Felix"){ // hilarity ensues
+                    echo "Felix";
+                }else{
+                    echo abs(hexdec(substr(sha1($localName), 0, 10))%10)+1;
+                }
+             ?>.jpg" style="width:280px"/>
             <br><br>
             <!-- profile information -->
             <table>
