@@ -25,15 +25,15 @@ if($result){
 } 
 // If result matched $myusername and $mypassword, table row must be 1 row
 
-if($count==1){
-// Register $myusername, $mypassword and redirect to file "login_success.php"
-session_start();
-$_SESSION['username']=$myusername;
-$_SESSION['password']=$mypassword; 
-header("location:profile.php?username=".$_SESSION['username']);
+if($count>0){
+    // Register $myusername, $mypassword and redirect to file "login_success.php"
+    session_start();
+    $_SESSION['username']=$myusername;
+    $_SESSION['password']=$mypassword; 
+    header("location:profile.php?username=".$_SESSION['username']);
 }
 else {
-echo "Wrong Username or Password";
-    header("location:index.php?err=badinput");
+    $res = "Wrong Username or Password. Query was $sql";
+    header("location:index.php?err=$res");
 }
 ?>

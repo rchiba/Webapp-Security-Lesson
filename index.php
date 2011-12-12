@@ -85,12 +85,12 @@
           <ul class="nav">
           </ul>
           <form action="checkLogin.php" class="pull-right" method="post">
-            <a href="#" data-placement="below" rel="popover" data-content="Hmmm... I wonder if they're checking the input fields?" data-original-title="SQL Injection">
+
                 <input class="input-small" type="text" placeholder="Username" name="username">
-            </a>
-            <a href="#" data-placement="below" rel="popover" data-content="Here are some examples of entries that might reveal interesting information: <br> hello" data-original-title="Examples">
+
+
             <input class="input-small" type="password" placeholder="Password" name="password">
-            </a>
+
             <button class="btn" type="submit">Sign in</button>
           </form>
         </div>
@@ -107,8 +107,11 @@
             if(!empty($_GET["err"]) && $_GET["err"]=="badinput"){
                 echo '<div class="alert-message error"> <a class="close" href="#">x</a><p><strong>Error!</strong> Wrong username or password!</p></div>';
             }
-            if(!empty($_GET["err"]) && $_GET["err"]=="userAlreadyExists"){
+            else if(!empty($_GET["err"]) && $_GET["err"]=="userAlreadyExists"){
                 echo '<div class="alert-message error"> <a class="close" href="#">x</a><p><strong>Error!</strong> User already exists! Try a different username.</p></div>';
+            }
+            else if(!empty($_GET["err"])){
+                echo '<div class="alert-message error"> <a class="close" href="#">x</a><p><strong>Error!</strong> '.$_GET["err"].'.</p></div>';
             }
             if(!empty($_GET["msg"]) && $_GET["msg"]=="logout"){
                 // session_start();

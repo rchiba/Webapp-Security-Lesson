@@ -52,7 +52,7 @@
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
   </head>
 
-  <body>
+  <body onload="prettyPrint()">
     <div class="topbar">
       <div class="fill">
         <div class="container">
@@ -79,13 +79,25 @@
             <p>
             <img id="hackerCat" src="img/hackerCat.jpg" style="display:none; margin-top:10px;">
             </p>
+            <p>
+            First, begin by creating a couple of new accounts for the system using the registration form on the front page. Remember the passwords for at least a couple of the accounts you create, and use one to log into the system using the login menu at the top right of the screen. </p>
+            
+            <p>Once you are logged in, you will see your profile page. Create a couple of posts using the text box and post button. You can see all of the cats in the system in the navigation bar at the top of the screen. You can browse through their profiles, but they do not have any posts yet. </p>
+            
+            <p>Go ahead and log out, and log in as another user. Create a couple of posts, and then navigate to the first user you logged in as. You will be able to see their posts, but should not be able to post to their page. This is the extent of this simple web application. Now that we have explored the app, let's consider the three types of vulnerabilities we will be examining:
+            <ul>
+                <li> <a href="#sqlInjection">SQL Injection</a> </li>
+                <li> <a href="#xss">Cross Site Scripting (XSS)</a> </li>
+                <li> <a href="#accessControl">Access Control</a> </li>
+            </ul>
+            </p>
             <br>
             
             
             <!--SQL INJECTION -->
             <hr>
             <br>
-            <h2>SQL Injection <small>Lesson 1</small></h2>
+            <h2 id="sqlInjection">SQL Injection <small>Lesson 1</small></h2>
             <br>
             <p><img style="width:580px" src="img/exploits_of_a_mom.png" /></p>
             <br>
@@ -98,10 +110,38 @@
             
             <h4>Why is SQL Injection important?</h4> 
             <p>
-                SQL Injection is so dangerous for a web application because it is an attack on 
+                SQL Injection is so dangerous for a web application because an attack on a database may comprimise very sensitive information (credit card numbers, social security numbers, etc), and modifications to a database may bring an entire system down, or even cause it to behave maliciously.
             </p>
             <br>
             
+            <h4>How is catbook&#8482 affected?</h4> 
+            <p>
+                Like any web application, catbook must write to and read from a database to store its users and their posts. 
+                Suppose a hacker cat wants to find all the entries in the table of users. How would they go about it?
+                <br>
+                
+            </p>
+            <p>
+                <i>Hint: A smart kitty thinks about the points in the application where the database is queried.</i>
+            </p>
+            <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans1').style.display='';}">i can haz anzwer?</button>
+            <br>
+            <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans1">
+                <p>
+                     <b>Try using some of these:</b>
+                     <p>
+                     <ul>
+                        <li>This query uses a OR 'x'='x' statement to trick the getPost.php script into returning all the posts in the table.<pre class="prettyprint">http://localhost/itpProject/getPost.php?username='%20OR%20'x'='x</pre></li>
+                        <li>b</li>
+                        <li>c</li>
+                     </ul>
+                     </p>
+                     <br>
+                    <strong>How could we have prevented this?</strong>
+                    <br>
+                    The best way to prevent SQL injections is to sanitize all data coming into the system. 
+                </p>
+            </div>
             
             
             <p>
@@ -119,7 +159,7 @@
             <!-- XSS -->
             <hr>
             <br>
-            <h2>XSS <small>Lesson 2</small></h2>
+            <h2 id="xss">XSS <small>Lesson 2</small></h2>
             <br>
             
             <h4>What is XSS?</h4>
@@ -134,9 +174,15 @@
             </p>
             <br>
             
+            <h4>What is a typical XSS exploit scenario?</h4> 
+            <p>
+                Say there are two users of a banking web application, Mittens and Felix, the attacker. Inside the web application, you can search the site for a specific page using a search input field. When a user searches, the search query is displayed on the page before the results. Say the web application programmer forgot to escape the query before printing it on the results screen. Felix can then craft a search URL where the query is his malicious javascript that can read and send the current user's session cookie to Felix's server. Felix can then send the link to Mittens, upon which Mittens will open the page and execute Felix's code on her logged-in client. Felix will then receive Mittens' session cookie, and can now use it to use the banking site as if he were Mittens.
+            </p>
+            <br>
+            
             <h4>How is catbook&#8482 affected?</h4> 
             <p>
-                Suppose a hacker cat decides to find a way to run arbitrary scripts on other user's computers. How would she do this?
+                Suppose a hacker cat decides to find a way to run arbitrary scripts on other user's computers. How would she do this? 
                 <br>
                 
             </p>
@@ -147,13 +193,22 @@
             <br>
             <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans2">
                 <p>
-                     One possible <strong>non-persistent XSS attack</strong> is on the homepage (index.php). After you create a new user, or when you log out, you can see that a "msg" url parameter signals to the page what should be printed out in the alert. If we insert code instead of a message in this parameter, when it prints inside the alert, it will be executed. If this contaminated URL is passed to another user, arbitrary javascript can be executed on their machine. Note that this only works on certain browsers, mainly Firefox. Chrome and Safari appear to sense that code is in the url parameter and prevent its execution.
+                     One possible <strong>non-persistent XSS attack</strong> is on the homepage (index.php). After you create a new user, or when you log out, you can see that a "msg" url parameter signals to the page what should be printed out in the alert. If we insert code instead of a message in this parameter, when it prints inside the alert, it will be executed: 
+                     <pre>
+                     http://localhost/itpProject/index.php?msg=%3Cscript%3Ealert%28%22hello%22%29%3C%2Fscript%3E</pre> If this contaminated URL is passed to another user, arbitrary Javascript can be executed on their machine. Note that this appears to only work on Firefox. IE, Chrome, and Safari appear to sense that code is in the url parameter and prevent its execution.
                     <br><br>
-                    One possible <strong>persistent XSS attack</strong> is by using the posts of one's own profile to store code.
+                    One possible <strong>persistent XSS attack</strong> is by using the posts of one's own profile to store code. Say we post the following on our own profile:
+                    <pre class="prettyprint">&ltscript&gtalert(document.cookie);&lt/script&gt</pre>
+                    If another user looks at our profile, which will have a perfectly normal URL unlike the case before, the arbitrary Javascript will execute. If we were true attackers, instead of printing out the session cookie, we could have sent it to our own server using an image request with cookie embedded in the filename, allowing our server to receive the session cookie.
                     <br><br><br>
                     <strong>How could we have prevented this?</strong>
                     <br>
-                    The best way to prevent this attack would have been to only allow this script to be sent to the client when it is the user's own page. In addition, the insertPost.php script should check the session cookie and validate that the current session's username is the same as the username sent in the post request.
+                    <p>
+                    As a web application programmer, the best way to prevent this attack would have been to escape any input strings to the web app and validating any HTML input. In addition, a web app programmer can tie IP addresses to cookies so that even if a cookie was stolen in an XSS attack, the attacker would not be able to use it to enter into another user's session (at least without knowing the IP address of the user they stole the cookie from).
+                    </p>
+                    <p>
+                    As a web application user, the best way to prevent others from XSS'ing you are to disable scripts (using a plugin like NoScript)
+                    </p>
                 </p>
             </div>
             
@@ -164,17 +219,30 @@
                     <li><a href="http://ha.ckers.org/xss.html" target="_blank">XSS Cheatsheat - ha.ckers</a></li>
                     <li><a href="http://www.reddit.com/r/xss" target="_blank">/r/XSS on reddit</a></li>
                     <li><a href="http://www.quora.com/XSS?q=xss" target="_blank">Quora's XSS Page</a></li>
+                    <li><a href="https://addons.mozilla.org/en-US/firefox/addon/noscript/" target="_blank">NoScript Firefox Plugin</a></li>
                 </ul>
             </p>
             
             <!-- Access Control -->
             <hr>
             <br>
-            <h2>Access Control <small>Lesson 3</small></h2>
+            <h2 id="accessControl">Access Control <small>Lesson 3</small></h2>
             <br>
             <h4>What is Access Control?</h4>
             <p>
                 Access Control is defined as "<i>exerting control over who can interact with a resource.</i>". In web applications, the resources are often private data and administrative actions, and they are usually controled using some sort of role-based priviledge.
+            </p>
+            <br>
+            
+            <h4>Types of access control attacks?</h4>
+            <p>
+                <b>Vertical Priviledge Escalation</b> occurs when the user can perform functions that they are not allowed to.
+            </p>
+            <p>
+                <b>Horizontal Priviledge Escalation</b> occurs when the user can view/modify resources they have no permission to.
+            </p>
+            <p>
+                If a developer is careless, they may leave sensitive functionality completely unprotected. Whether it be an obscure administrative URL, a direct access to a resource on a server, or even hidden client-side functionality, the mistakes that can comprimise access control are many.
             </p>
             <br>
             
@@ -188,18 +256,38 @@
             <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans3').style.display='';}">i can haz anzwer?</button>
             
             <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans3">
-                <p>
-                    The answer lies in line blah of profile.php
-                    <br><br>
+
+                    The answer lies in the inline javascript contained within profile.php. Notably, the function that begins with<pre class="prettyprint">/*var*/ insertPost = function(first){</pre>
+                    <p>
                     Here, we see a function left in all of the profile pages that allows us to insert posts into other cat's profile pages. Now that we have found it, how do we call it? 
-                    <br><br>
-                    First, open the javascript console on your machine. On Chrome for PC, it's "ctrl+shift+j", but searching for "javascript console"+"name of browser" will reveal how to do it on your machine. Now, from the console, simply call "insertPost('I haxxored you');" from the profile page you want to hack.
-                    <br><br><br>
+                    </p>
+                    <br>
+                    <p>
+                    First, open the javascript console on your machine. On Chrome for PC, it's "ctrl+shift+j", but searching for "javascript console"+"name of browser" will reveal how to do it on your machine. Now, from the console, simply call <pre class="prettyprint">insertPost('I haxxored you');</pre> from the profile page you want to hack. This will cause the hidden javascript to run, sending a POST to the server to save a post for this profile.
+                    </p>
+                    <br>
                     <strong>How could we have prevented this?</strong>
                     <br>
-                    The best way to prevent this attack would have been to only allow this script to be sent to the client when it is the user's own page. In addition, the insertPost.php script should check the session cookie and validate that the current session's username is the same as the username sent in the post request.
-                </p>
+                    The best way to prevent this attack would have been to only allow this script to be sent to the client when it is the user's own page. In addition, the insertPost.php script should check the session cookie and validate that the current session's username is the same as the username sent in the post request. That way, even if a POST request is made to the server, it will reject it if the user is not logged in on that session.
+                    <br><br>
+                    <p>
+
+                    In general, a web application programmer must never rely on:
+                    <ul>
+                    <li><b>Obscurity</b> - hiding client-side functionality will not keep it away from those who view the source.</li>
+                    <li><b>User-Submitted parameters</b> - if they are tied to access rights, then your access rights can be manipulated by an attacker.</li>
+                    <li><b>Requests</b> - Data sent to the server can be easily tampered with.</li>
+                    </ul>
+                    </p>
+
             </div>
+            
+             <p>
+                <h4>Relevant Links</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/Access_control#Computer_security" target="_blank">Access Control - Wikipedia</a></li>
+                </ul>
+            </p>
             
             <br>
             
