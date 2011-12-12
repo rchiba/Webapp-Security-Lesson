@@ -81,7 +81,7 @@
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="#">catbook</a>
+          <a class="brand" href="#">catbook&#8482</a>
           <ul class="nav">
           </ul>
           <form action="checkLogin.php" class="pull-right" method="post">
@@ -114,18 +114,19 @@
                 // session_start();
                 // session_destroy(); 
                 echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>You have been logged out.</p></div>';
-            }
-            if(!empty($_GET["msg"]) && $_GET["msg"]=="userCreated"){
+            } else if(!empty($_GET["msg"]) && $_GET["msg"]=="userCreated"){
                 // session_start();
                 // session_destroy(); 
                 echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>User '.$_GET["user"].'has been created.</p></div>';
+            } else if(!empty($_GET["msg"])){
+                 echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>'.$_GET["msg"].'</p></div>';
             }
           ?>
           </div>
         </div>
         <div class="row">
           <div class="span12">
-            <h2>catbook<small>, the social network for cats</small></h2>
+            <h2>catbook&#8482<small>, the social network for cats</small></h2>
             Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. This mock social networking site will reveal the kinds of vulnerabilities that are common in poorly implemented web applications. To begin your lesson, start by opening this lesson plan and following the tips.
             <button class="btn" onclick="window.open('lesson.html');">Open Lesson</button>
             <br>
@@ -173,7 +174,7 @@
       </div>
 
       <footer>
-        <p>&copy; catbook 2011</p>
+        <p>&copy; catbook&#8482 2011</p>
       </footer>
 
     </div> <!-- /container -->

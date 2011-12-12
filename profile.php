@@ -72,12 +72,16 @@
         // Some unsophisticated developer must have accidentally left this in here for all profile pages
         // instead of just yours. This may be able to elevate your access controls.
         //
-        /*var*/ insertPost = function(){
+        /*var*/ insertPost = function(first){
+            var postText = $("#postInput").val();
+            if(typeof first == 'string'){ // allows for a parameter to be passed in optionally with the message
+                postText = first;
+            }
             $.ajax({
                 type: "post",
                 dataType: "html",
                 url: 'insertPost.php?',
-                data: {'post':$("#postInput").val(), 'username':'<?php echo $localName; ?>'},
+                data: {'post':postText, 'username':'<?php echo $localName; ?>'},
                 success: function(response) {
                     $("#postInput").val(""); // clear the postInput
                     // console.log($.parseJSON.parse(response));
@@ -118,7 +122,7 @@
     <div class="topbar" data-dropdown="dropdown">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="profile.php?username=<?php echo $_SESSION['username']?>">catbook</a>
+          <a class="brand" href="profile.php?username=<?php echo $_SESSION['username']?>">catbook&#8482</a>
           <ul class="nav">
             <li><a href="profile.php?username=<?php echo $_SESSION['username']?>">Home</a></li>
             <?php
@@ -226,7 +230,7 @@
       </div>
 
       <footer>
-        <p>&copy; catbook 2011</p>
+        <p>&copy; catbook&#8482 2011</p>
       </footer>
 
     </div> <!-- /container -->

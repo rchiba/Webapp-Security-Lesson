@@ -10,12 +10,14 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    <link href="js/prettify.css" rel="stylesheet">
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap-modal.js"></script>
     <script src="js/bootstrap-twipsy.js"></script>
     <script src="js/bootstrap-popover.js"></script>
     <script src="js/bootstrap-alerts.js"></script>
+    <script src="js/prettify.js"></script>
     <!-- Le js -->
     <script>
     $(document).ready(function() {
@@ -54,7 +56,7 @@
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="#">catbook</a>
+          <a class="brand" href="#">catbook&#8482</a>
           <ul class="nav">
           </ul>
         </div>
@@ -72,9 +74,15 @@
         <div class="row">
           <div class="span10">
             <h2>catbook<small>, a lesson in web application security</small></h2>
-            Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. We'll use this mock web application to learn about three types of security vulnerabilities that exist in web applications. To begin your lesson, position this window side-by-side with the application window and follow along. You will be encouraged to explore, and if you need tips, just hit the buttons to reveal hints.
-            <button class="btn" onclick="window.open('lesson.html');">Hint</button>
+            Welcome to catbook! The social network where cats can post updates on their favorite naptimes, catnip, and toaster strudel outfits. We'll use this mock web application to learn about three types of security vulnerabilities that exist in web applications. To begin your lesson, position this window side-by-side with the application window and follow along. You will be encouraged to explore, and if you need tips, just hit the buttons to reveal the answer.
+            <button class="btn" onclick="if(window.confirm('Are you ready to become teh haxxorz kitteh?')){document.getElementById('hackerCat').style.display='inline';}">i can haz anzwer?</button>
+            <p>
+            <img id="hackerCat" src="img/hackerCat.jpg" style="display:none; margin-top:10px;">
+            </p>
             <br>
+            
+            
+            <!--SQL INJECTION -->
             <hr>
             <br>
             <h2>SQL Injection <small>Lesson 1</small></h2>
@@ -84,7 +92,7 @@
             
             <h4>What is SQL Injection?</h4>
             <p>
-                SQL Injection is defined as "<i>inputting SQL statements in a web form to get a badly designed website to perform operations on the database</i>"
+                SQL Injection is defined as "<i>inputting SQL statements in a web form to get a badly designed website to perform operations on the database</i>".
             </p>
             <br>
             
@@ -106,6 +114,9 @@
                     
                 </ul>
             </p>
+            
+            
+            <!-- XSS -->
             <hr>
             <br>
             <h2>XSS <small>Lesson 2</small></h2>
@@ -119,29 +130,80 @@
             
             <h4>Why is XSS important?</h4> 
             <p>
-                According to Symantec, XSS attacks accounted for about <b>80%</b> of all documented security vulnerabilities in 2007. Although it has been a number of years since, these types of vulnerabilities are still common, are easy to miss by an impatient developer, and can lead to dangerous security holes. If an attacker can find a way to execute arbitrary client-side code on another user's machine, the possibilities are catastrophic: the attacker could gain private information, account access, and can even write code that may self-propagate throughout a system. 
+                According to Symantec, XSS attacks accounted for about <b>80%</b> of all documented security vulnerabilities in 2007. Although it has been a number of years since, these types of vulnerabilities are still common, are easy to miss by an impatient developer, and can lead to dangerous security holes. If an attacker can find a way to execute arbitrary client-side code on another user's machine, the possibilities are catastrophic: <b>the attacker could gain private information, account access, and can even write code that may self-propagate throughout a system</b>. 
             </p>
             <br>
             
-            <h4>What are some typical scenarios?</h4> 
+            <h4>How is catbook&#8482 affected?</h4> 
             <p>
-                According to Symantec, XSS attacks accounted for about 80% of all documented security vulnerabilities in 2007. Although it has been a number of years since, these types of vulnerabilities are still common, and are easy to miss by an impatient developer, and can lead to large security holes. If an attacker can find a way to execute arbitrary client-side code on another user's machine, the possibilities are catastrophic: the attacker can gain private information, account access, and can even write code that may self-propagate throughout a system. 
+                Suppose a hacker cat decides to find a way to run arbitrary scripts on other user's computers. How would she do this?
+                <br>
+                
             </p>
+            <p>
+                <i>Hint: A smart kitty thinks about what she can save to the server, and what can be hidden in URLS.</i>
+            </p>
+            <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans2').style.display='';}">i can haz anzwer?</button>
             <br>
+            <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans2">
+                <p>
+                     One possible <strong>non-persistent XSS attack</strong> is on the homepage (index.php). After you create a new user, or when you log out, you can see that a "msg" url parameter signals to the page what should be printed out in the alert. If we insert code instead of a message in this parameter, when it prints inside the alert, it will be executed. If this contaminated URL is passed to another user, arbitrary javascript can be executed on their machine. Note that this only works on certain browsers, mainly Firefox. Chrome and Safari appear to sense that code is in the url parameter and prevent its execution.
+                    <br><br>
+                    One possible <strong>persistent XSS attack</strong> is by using the posts of one's own profile to store code.
+                    <br><br><br>
+                    <strong>How could we have prevented this?</strong>
+                    <br>
+                    The best way to prevent this attack would have been to only allow this script to be sent to the client when it is the user's own page. In addition, the insertPost.php script should check the session cookie and validate that the current session's username is the same as the username sent in the post request.
+                </p>
+            </div>
             
             <p>
                 <h4>Relevant Links</h4>
                 <ul>
                     <li><a href="http://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">XSS - Wikipedia</a></li>
+                    <li><a href="http://ha.ckers.org/xss.html" target="_blank">XSS Cheatsheat - ha.ckers</a></li>
                     <li><a href="http://www.reddit.com/r/xss" target="_blank">/r/XSS on reddit</a></li>
                     <li><a href="http://www.quora.com/XSS?q=xss" target="_blank">Quora's XSS Page</a></li>
                 </ul>
             </p>
             
+            <!-- Access Control -->
             <hr>
             <br>
             <h2>Access Control <small>Lesson 3</small></h2>
             <br>
+            <h4>What is Access Control?</h4>
+            <p>
+                Access Control is defined as "<i>exerting control over who can interact with a resource.</i>". In web applications, the resources are often private data and administrative actions, and they are usually controled using some sort of role-based priviledge.
+            </p>
+            <br>
+            
+            <h4>How is catbook&#8482 affected?</h4>
+            <p>
+                Suppose a hacker cat wants to find a way to gain posting priviledges for other cats. What would she do? 
+            </p>
+            <p>
+                <i>Hint: A smart kitty first examines the source. </i>
+            </p>
+            <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans3').style.display='';}">i can haz anzwer?</button>
+            
+            <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans3">
+                <p>
+                    The answer lies in line blah of profile.php
+                    <br><br>
+                    Here, we see a function left in all of the profile pages that allows us to insert posts into other cat's profile pages. Now that we have found it, how do we call it? 
+                    <br><br>
+                    First, open the javascript console on your machine. On Chrome for PC, it's "ctrl+shift+j", but searching for "javascript console"+"name of browser" will reveal how to do it on your machine. Now, from the console, simply call "insertPost('I haxxored you');" from the profile page you want to hack.
+                    <br><br><br>
+                    <strong>How could we have prevented this?</strong>
+                    <br>
+                    The best way to prevent this attack would have been to only allow this script to be sent to the client when it is the user's own page. In addition, the insertPost.php script should check the session cookie and validate that the current session's username is the same as the username sent in the post request.
+                </p>
+            </div>
+            
+            <br>
+            
+            
             <br>
             
             
@@ -150,7 +212,7 @@
       </div>
 
       <footer>
-        <p>&copy; catbook 2011</p>
+        <p>&copy; catbook&#8482 2011</p>
       </footer>
 
     </div> <!-- /container -->
