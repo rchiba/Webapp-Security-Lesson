@@ -120,7 +120,7 @@
             } else if(!empty($_GET["msg"]) && $_GET["msg"]=="userCreated"){
                 // session_start();
                 // session_destroy(); 
-                echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>User '.$_GET["user"].'has been created.</p></div>';
+                echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>User '.$_GET["user"].' has been created.</p></div>';
             } else if(!empty($_GET["msg"])){
                  echo '<div class="alert-message success"> <a class="close" href="#">x</a><p>'.$_GET["msg"].'</p></div>';
             }

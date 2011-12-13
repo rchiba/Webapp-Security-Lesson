@@ -23,9 +23,9 @@ mysql_select_db("$db_name")or die("cannot select DB");
 $defaultUser=$_POST["username"];
 $defaultPass=$_POST["password"];
 $sqlDrop="DROP TABLE IF EXISTS $tbl_name;";
-$sqlCreateTable="Create Table $tbl_name(id INT(4) NOT NULL auto_increment, username VARCHAR(65) NOT NULL, pword VARCHAR(65) NOT NULL, PRIMARY KEY(id)) ENGINE=MyISAM;";
+$sqlCreateTable="Create Table $tbl_name(id INT(4) NOT NULL auto_increment, username VARCHAR(65) NOT NULL, pword VARCHAR(65) NOT NULL, creditcard VARCHAR(65) NOT NULL, PRIMARY KEY(id)) ENGINE=MyISAM;";
 $sqlCreatePostTable="Create Table $tbl_namePosts(id INT(4) NOT NULL auto_increment, username VARCHAR(65) NOT NULL, post VARCHAR(300) NOT NULL, time timestamp NULL, PRIMARY KEY(id)) ENGINE=MyISAM;";
-$sqlInsertEntry="INSERT INTO $tbl_name (username,pword) VALUES ('$defaultUser', '$defaultPass');";
+$sqlInsertEntry="INSERT INTO $tbl_name (username,pword,creditcard) VALUES ('$defaultUser', '$defaultPass', '12341234');";
 
 // mysql_query($sqlDrop);
 // create both tables in case they are not created already

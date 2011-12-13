@@ -94,72 +94,13 @@
             <br>
             
             
-            <!--SQL INJECTION -->
-            <hr>
-            <br>
-            <h2 id="sqlInjection">SQL Injection <small>Lesson 1</small></h2>
-            <br>
-            <p><img style="width:580px" src="img/exploits_of_a_mom.png" /></p>
-            <br>
             
-            <h4>What is SQL Injection?</h4>
-            <p>
-                SQL Injection is defined as "<i>inputting SQL statements in a web form to get a badly designed website to perform operations on the database</i>".
-            </p>
-            <br>
-            
-            <h4>Why is SQL Injection important?</h4> 
-            <p>
-                SQL Injection is so dangerous for a web application because an attack on a database may comprimise very sensitive information (credit card numbers, social security numbers, etc), and modifications to a database may bring an entire system down, or even cause it to behave maliciously.
-            </p>
-            <br>
-            
-            <h4>How is catbook&#8482 affected?</h4> 
-            <p>
-                Like any web application, catbook must write to and read from a database to store its users and their posts. 
-                Suppose a hacker cat wants to find all the entries in the table of users. How would they go about it?
-                <br>
-                
-            </p>
-            <p>
-                <i>Hint: A smart kitty thinks about the points in the application where the database is queried.</i>
-            </p>
-            <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans1').style.display='';}">i can haz anzwer?</button>
-            <br>
-            <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans1">
-                <p>
-                     <b>Try using some of these:</b>
-                     <p>
-                     <ul>
-                        <li>This query uses a OR 'x'='x' statement to trick the getPost.php script into returning all the posts in the table.<pre class="prettyprint">http://localhost/itpProject/getPost.php?username='%20OR%20'x'='x</pre></li>
-                        <li>b</li>
-                        <li>c</li>
-                     </ul>
-                     </p>
-                     <br>
-                    <strong>How could we have prevented this?</strong>
-                    <br>
-                    The best way to prevent SQL injections is to sanitize all data coming into the system. 
-                </p>
-            </div>
-            
-            
-            <p>
-                <h4>Relevant Links</h4>
-                <ul>
-                    <li><a href="http://en.wikipedia.org/wiki/SQL_injection" target="_blank">SQL Injection - Wikipedia</a></li>
-                    <li><a href="https://docs.google.com/Doc?docid=0AZNlBave77hiZGNjanptbV84Z25yaHJmMjk&pli=1#Allowed_Intermediary_Character_30801873723976314" target="_blank">SQL Injection Pocket Reference - Google Docs</a></li>
-                    <li><a href="http://www.quora.com/SQL-Injection" target="_blank">SQL Injection Topic - Quora</a></li>
-                    <li><a href="http://imgur.com/RQcCi.jpg" target="_blank">SQL Injection IRL</a></li>
-                    
-                </ul>
-            </p>
             
             
             <!-- XSS -->
             <hr>
             <br>
-            <h2 id="xss">XSS <small>Lesson 2</small></h2>
+            <h2 id="xss">XSS <small>Lesson 1</small></h2>
             <br>
             
             <h4>What is XSS?</h4>
@@ -226,7 +167,7 @@
             <!-- Access Control -->
             <hr>
             <br>
-            <h2 id="accessControl">Access Control <small>Lesson 3</small></h2>
+            <h2 id="accessControl">Access Control <small>Lesson 2</small></h2>
             <br>
             <h4>What is Access Control?</h4>
             <p>
@@ -251,19 +192,28 @@
                 Suppose a hacker cat wants to find a way to gain posting priviledges for other cats. What would she do? 
             </p>
             <p>
-                <i>Hint: A smart kitty first examines the source. </i>
+                <i>Hint: A smart kitty first examines the source. And also checks where spiders would go.</i>
             </p>
             <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans3').style.display='';}">i can haz anzwer?</button>
             
             <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans3">
-
-                    The answer lies in the inline javascript contained within profile.php. Notably, the function that begins with<pre class="prettyprint">/*var*/ insertPost = function(first){</pre>
+                    <b>Attack 1</b>
+                    <br>
+                    One answer lies in the <b>inline javascript contained within profile.php</b>. Notably, the function that begins with<pre class="prettyprint">/*var*/ insertPost = function(first){</pre>
                     <p>
                     Here, we see a function left in all of the profile pages that allows us to insert posts into other cat's profile pages. Now that we have found it, how do we call it? 
                     </p>
                     <br>
                     <p>
                     First, open the javascript console on your machine. On Chrome for PC, it's "ctrl+shift+j", but searching for "javascript console"+"name of browser" will reveal how to do it on your machine. Now, from the console, simply call <pre class="prettyprint">insertPost('I haxxored you');</pre> from the profile page you want to hack. This will cause the hidden javascript to run, sending a POST to the server to save a post for this profile.
+                    </p>
+                    <br>
+                    <p>
+                    <b>Attack 2</b>
+                    <br>
+                    Another way to escalate priviledges is to look into <b><a href="http://localhost/itpProject/robots.txt" target="_blank">robots.txt</a></b>. Here, one will see that a certain administrative webpanel is hidden at an unprotected, obscure URL, namely, <pre>http://localhost/itpProject/obscurePath/admin.php</pre>
+                    By using this webpanel, we can make further exploits, namely some SQL injection attacks. Read the next lesson to learn more about SQL injection.
+                    
                     </p>
                     <br>
                     <strong>How could we have prevented this?</strong>
@@ -286,11 +236,75 @@
                 <h4>Relevant Links</h4>
                 <ul>
                     <li><a href="http://en.wikipedia.org/wiki/Access_control#Computer_security" target="_blank">Access Control - Wikipedia</a></li>
+                    <li><a href="https://developer.mozilla.org/en/JavaScript" target="_blank">Javascript Reference - MDN (by far the best I've come across)</a></li>
                 </ul>
             </p>
             
             <br>
             
+            
+            <!--SQL INJECTION -->
+            <hr>
+            <br>
+            <h2 id="sqlInjection">SQL Injection <small>Lesson 3</small></h2>
+            <br>
+            <p><img style="width:580px" src="img/exploits_of_a_mom.png" /></p>
+            <br>
+            
+            <h4>What is SQL Injection?</h4>
+            <p>
+                SQL Injection is defined as "<i>inputting SQL statements in a web form to get a badly designed website to perform operations on the database</i>".
+            </p>
+            <br>
+            
+            <h4>Why is SQL Injection important?</h4> 
+            <p>
+                SQL Injection is so dangerous for a web application because an attack on a database may comprimise very sensitive information (credit card numbers, social security numbers, etc), and modifications to a database may bring an entire system down, or even cause it to behave maliciously.
+            </p>
+            <br>
+            
+            <h4>How is catbook&#8482 affected?</h4> 
+            <p>
+                Like any web application, catbook must write to and read from a database to store its users and their posts. 
+                Suppose a hacker cat wants to find all the entries in the table of users. How would they go about it?
+                <br>
+                
+            </p>
+            <p>
+                <i>Hint: A smart kitty thinks about the points in the application where the database is queried.</i>
+            </p>
+            <button class="btn" onclick="if(window.confirm('Are you sure you want to see teh answer?')){document.getElementById('ans1').style.display='';}">i can haz anzwer?</button>
+            <br>
+            <div class="alert-message block-message info" style="margin-top:12px; display:none" id="ans1">
+                <p>
+                     <b>Try using some of these:</b>
+                     <p>
+                     <ul>
+                        <li>This query uses a OR 'x'='x' statement to trick the getPost.php script into returning all the posts in the table.<pre class="prettyprint">http://localhost/itpProject/getPost.php?username='%20OR%20'x'='x</pre></li>
+                        <li>In the administrative panel unlocked in Lesson 2, there is a search users function that allows you to search for a user. If you type in <pre>'</pre>, the following will print out <pre class="prettyprint">Could not successfully run SELECT username FROM members WHERE username=''';</pre> This gives us a clue as to what to do next. We can inject the following SQL statement to get all the users:<pre class="prettyprint">' OR 'x'='x</pre>Following that, the next step we might take is to find what columns are part of the table we are attacking. To do this, we use the INFORMATION_SCHEMA table and craft the following query: <pre class="prettyprint">' OR 'x'='x' UNION SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='members</pre>By observing the last few print statements that are being outputted, we can see that there is a column called "pword" that is storing the passwords. Now, we can craft a query to target that column and get all the users AND their passwords (the last half the the print statements will be the passwords: <pre class="prettyprint">' OR 'x'='x' UNION ALL SELECT pword FROM members WHERE 'x'='x</pre> Pretty handy!</li>
+                     </ul>
+                     </p>
+                     <br>
+                    <strong>How could we have prevented this?</strong>
+                    <br>
+                    The best way to prevent SQL injections is to sanitize all data coming into the system. To do this, we can filter out all hazardous characters such as the single quote, double quote, slash, backslash, semicolon, NULL, new line, etc. We can do this recursively until all possible hazardous tokens have been purged from the query.
+                </p>
+            </div>
+            
+            
+            <p>
+                <h4>Relevant Links</h4>
+                <ul>
+                    <li><a href="http://en.wikipedia.org/wiki/SQL_injection" target="_blank">SQL Injection - Wikipedia</a></li>
+                    <li><a href="http://www.unixwiz.net/techtips/sql-injection.html" target="_blank">SQL Injection Tips - unixwiz.net</a></li>
+                    <li><a href="https://docs.google.com/Doc?docid=0AZNlBave77hiZGNjanptbV84Z25yaHJmMjk&pli=1#Allowed_Intermediary_Character_30801873723976314" target="_blank">SQL Injection Pocket Reference - Google Docs</a></li>
+                    <li><a href="http://www.securiteam.com/securityreviews/5DP0N1P76E.html" target="_blank">SQL Injection walkthrough - securiteam.com</a></li>
+                    <li><a href="http://www.quora.com/SQL-Injection" target="_blank">SQL Injection Topic - Quora</a></li>
+                    <li><a href="http://delicious.com/inquis/sqlinjection" target="_blank">SQL Injection Link Collection - Delicious</a></li>
+                    <li><a href="http://imgur.com/RQcCi.jpg" target="_blank">SQL Injection IRL</a></li>
+                    
+                </ul>
+            </p>
             
             <br>
             
